@@ -1,0 +1,4 @@
+create table TOPICS (
+ID INTEGER,
+NAME VARCHAR
+);
