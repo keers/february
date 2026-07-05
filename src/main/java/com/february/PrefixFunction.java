@@ -1,4 +1,7 @@
 package com.february;
 
-public class PrefixFunction {
+public interface PrefixFunction {
+
+    int[] calculate(String input);
+
 }
