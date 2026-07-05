@@ -1,30 +1,36 @@
 package com.february;
 
-public class NaivePrefixFunction implements PrefixFunction{
+public class NaivePrefixFunction implements PrefixFunction {
 
     @Override
     public int[] calculate(String input) {
         if (input == null) {
             throw new IllegalArgumentException("Input is null");
         }
-        if (input.isEmpty()) {
-            return new int[0];
-        }
         final var result = new int[input.length()];
 
+        // substrings from input
         for (int i = 0; i < input.length(); i++) {
-            result[i] = maxBorder(input.substring(0, i + 1));
-        }
-        return result;
-    }
+            var currentResult = 0;
 
-    private int maxBorder(String input) {
-        final var length = input.length();
-        int result = 0;
-        for (int i = 1; i < length; i++) {
-            if (input.substring(0, i).equals(input.substring(length - i, length))) {
-                result = i;
+            // prefix & suffix
+            for (int j = 1; j < i + 1; j++) {
+
+                boolean prefixMatchesSuffix = true;
+
+                for (int k = 0; k < j; k++) {
+                    if (input.charAt(k) != input.charAt(i - j + 1 + k)) {
+                        prefixMatchesSuffix = false;
+                        break;
+                    }
+                }
+
+                if (prefixMatchesSuffix) {
+                    currentResult = j;
+                }
             }
+
+            result[i] = currentResult;
         }
         return result;
     }

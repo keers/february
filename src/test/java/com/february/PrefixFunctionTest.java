@@ -9,11 +9,9 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class NaivePrefixFunctionTest {
+class PrefixFunctionTest {
 
-    private final PrefixFunction prefixFunction = new NaivePrefixFunction();
-
-    private static Stream<Arguments> prefixFunctionTestCases() {
+    public static Stream<Arguments> prefixFunctionTestCases() {
         return Stream.of(
                 arguments("", new int[]{}),
                 arguments("A", new int[]{0}),
@@ -25,8 +23,20 @@ class NaivePrefixFunctionTest {
 
     @ParameterizedTest
     @MethodSource("prefixFunctionTestCases")
-    void gives_expected_result(String input, int[] expected) {
-        var result = prefixFunction.calculate(input);
+    void very_naive_gives_expected_result(String input, int[] expected) {
+        var veryNaivePrefixFunction = new VeryNaivePrefixFunction();
+
+        var result = veryNaivePrefixFunction.calculate(input);
+
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @MethodSource("prefixFunctionTestCases")
+    void naive_gives_expected_result(String input, int[] expected) {
+        var naivePrefixFunction = new NaivePrefixFunction();
+
+        var result = naivePrefixFunction.calculate(input);
 
         assertThat(result).isEqualTo(expected);
     }
