@@ -16,6 +16,7 @@ class PrefixFunctionTest {
                 arguments("", new int[]{}),
                 arguments("A", new int[]{0}),
                 arguments("AA", new int[]{0, 1}),
+                arguments("ACCA", new int[]{0, 0, 0, 1}),
                 arguments("ABACABB", new int[]{0, 0, 1, 0, 1, 2, 0}),
                 arguments("AAAABA", new int[]{0, 1, 2, 3, 0, 1})
         );
@@ -35,6 +36,15 @@ class PrefixFunctionTest {
     @MethodSource("prefixFunctionTestCases")
     void naive_gives_expected_result(String input, int[] expected) {
         var naivePrefixFunction = new NaivePrefixFunction();
+
+        var result = naivePrefixFunction.calculate(input);
+
+        assertThat(result).isEqualTo(expected);
+    }
+    @ParameterizedTest
+    @MethodSource("prefixFunctionTestCases")
+    void fast_gives_expected_result(String input, int[] expected) {
+        var naivePrefixFunction = new FastPrefixFunction();
 
         var result = naivePrefixFunction.calculate(input);
 
